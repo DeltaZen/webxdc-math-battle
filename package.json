@@ -4,7 +4,10 @@
   "description": "Math Battle game for playing in Delta Chat",
   "main": "app.js",
   "scripts": {
-    "build": "pnpx jszip-cli -c .jsziprc.json"
+    "dev": "vite --host --open",
+    "prebuild": "vite build",
+    "build": "pnpx jszip-cli -c .jsziprc.json",
+    "preview": "vite preview"
   },
   "repository": {
     "type": "git",
@@ -18,5 +21,8 @@
   "homepage": "https://github.com/M4ss1ck/webxdc-math-battle#readme",
   "devDependencies": {
     "@ffflorian/jszip-cli": "^3.1.6"
+  },
+  "dependencies": {
+    "vite": "^2.9.5"
   }
 }
