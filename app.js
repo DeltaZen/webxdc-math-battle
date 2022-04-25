@@ -362,7 +362,7 @@ let PLAYERS = {};
           {
             payload: {
               name: currentName,
-              score: pts ? pts : 0,
+              score: pts,
             },
             info: info,
           },
