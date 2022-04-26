@@ -357,10 +357,11 @@ function mathGame() {
         }
       }
       const info = currentName + " scored " + pts + " in Math Battle";
-      if (PLAYERS[currentName] && PLAYERS[currentName].score < pts) {
+      if (PLAYERS[currentAddr] && PLAYERS[currentAddr].score < pts) {
         window.webxdc.sendUpdate(
           {
             payload: {
+              addr: currentAddr,
               name: currentName,
               score: pts,
             },
@@ -368,11 +369,12 @@ function mathGame() {
           },
           info
         );
-      } else if (PLAYERS[currentName] === undefined) {
+      } else if (PLAYERS[currentAddr] === undefined) {
         console.log("sendUpdate triggered");
         window.webxdc.sendUpdate(
           {
             payload: {
+              addr: currentAddr,
               name: currentName,
               score: pts ? pts : 0,
             },
@@ -416,7 +418,8 @@ function mathGame() {
     hash = (location.hash || "").substr(1);
   hash = hash.replace(/[\?&].*/g, "");
   var lastScore = 0,
-    currentName = window.webxdc.selfName;
+    currentName = window.webxdc.selfName,
+    currentAddr = window.webxdc.selfAddr;
 
   var scoreValue = htmlElement("score_value"),
     scoreValueResult = htmlElement("result_score_value"),
@@ -499,12 +502,12 @@ function mathGame() {
 async function updateLoader() {
   window.webxdc.setUpdateListener((update) => {
     const player = update.payload;
-    updateHighscore(player.name, player.score);
+    updateHighscore(player.addr, player.name, player.score);
   });
 }
 
-function updateHighscore(name, score) {
-  PLAYERS[name] = { name: name, score: score };
+function updateHighscore(addr, name, score) {
+  PLAYERS[addr] = { addr: addr, name: name, score: score };
 }
 
 updateLoader().then(() => mathGame());
