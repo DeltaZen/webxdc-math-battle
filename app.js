@@ -1,8 +1,8 @@
-// TODO: initialize PLAYERS
+// initialize PLAYERS
 let PLAYERS = {};
 
 /* https://telegram.org/js/games.js */
-(function () {
+function mathGame() {
   function decode(a) {
     try {
       return decodeURIComponent(a);
@@ -104,7 +104,7 @@ let PLAYERS = {};
       });
     },
   };
-})();
+}
 
 /* Math Battle */
 (function (win, doc) {
@@ -362,7 +362,7 @@ let PLAYERS = {};
           {
             payload: {
               name: currentName,
-              score: pts ? pts : 0,
+              score: pts,
             },
             info: info,
           },
@@ -507,4 +507,4 @@ function updateHighscore(name, score) {
   PLAYERS[name] = { name: name, score: score };
 }
 
-updateLoader();
+updateLoader().then(() => mathGame());
