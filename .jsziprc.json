@@ -12,7 +12,7 @@
   "force": true,
   "ignoreEntries": ["*.map"],
   "mode": "add",
-  "outputEntry": "math-battle 1.0.2.xdc",
+  "outputEntry": "math-battle 1.0.3.xdc",
   "quiet": false,
   "verbose": false
 }
