@@ -332,7 +332,7 @@ function mathGame() {
     if (array.length > 0) {
       console.log(array);
     }
-    setCurrentScore();
+    setScore();
     paintScoreboard();
   }
   function updateScoreboard() {
