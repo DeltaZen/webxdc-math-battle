@@ -1,6 +1,6 @@
 {
   "name": "webxdc-math-battle",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Math Battle game for playing in Delta Chat",
   "main": "app.js",
   "type": "module",

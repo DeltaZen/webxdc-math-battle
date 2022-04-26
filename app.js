@@ -250,9 +250,11 @@ function mathGame() {
     func && setTimeout(func, 300);
   }
   function setCurrentScore() {
+    console.log(scoreList);
     if (scoreList && scoreList.length)
       for (var a = 0; a < scoreList.length; a++) {
         var b = scoreList[a];
+        console.log(b);
         if (b.current) {
           console.log("setCurrentScore:\n\n", b);
           lastScore = b.score;
@@ -370,18 +372,20 @@ function mathGame() {
           info
         );
       } else if (PLAYERS[currentAddr] === undefined) {
-        console.log("sendUpdate triggered");
-        window.webxdc.sendUpdate(
-          {
-            payload: {
-              addr: currentAddr,
-              name: currentName,
-              score: pts ? pts : 0,
+        if (pts && pts > 0) {
+          console.log("sendUpdate triggered");
+          window.webxdc.sendUpdate(
+            {
+              payload: {
+                addr: currentAddr,
+                name: currentName,
+                score: pts,
+              },
+              info: info,
             },
-            info: info,
-          },
-          info
-        );
+            info
+          );
+        }
       }
       paintScoreboard();
       currentScore > lastScore ? setScore() : getHighScores();
