@@ -503,6 +503,7 @@ async function updateLoader() {
   window.webxdc.setUpdateListener((update) => {
     const player = update.payload;
     updateHighscore(player.addr, player.name, player.score);
+    if (update.serial === update.max_serial) mathGame();
   });
 }
 
