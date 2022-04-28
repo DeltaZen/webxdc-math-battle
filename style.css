@@ -5,12 +5,12 @@
   right: 0
 }
 
-.button,.game_title,.score_share {
+.button,.game_title {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent
 }
 
-.game_title,.score_share,.table .name {
+.game_title,.table .name {
   text-transform: uppercase
 }
 
@@ -119,7 +119,7 @@ body {
   right: 0
 }
 
-.button,.buttons,.score_share,.score_share_wrap {
+.button,.buttons {
   position: relative
 }
 
@@ -132,7 +132,7 @@ body {
   display: none
 }
 
-.result_score .score_value,.score_share,.score_share_wrap {
+.result_score .score_value {
   display: inline-block;
   vertical-align: middle
 }
@@ -140,66 +140,6 @@ body {
 .result_score .score_value {
   font-size: 48px;
   margin: -7px 0
-}
-
-.score_share_wrap {
-  width: 0
-}
-
-.score_share {
-  font-size: 14px;
-  font-weight: 700;
-  border-radius: 20px;
-  border: 3px solid #fff;
-  color: #fff;
-  margin-left: 20px;
-  padding: 4px 12px;
-  line-height: 17px;
-  visibility: hidden;
-  transition: transform .15s ease-in
-}
-
-.score_share.shown {
-  -webkit-animation: share .2s ease-out;
-  animation: share .2s ease-out;
-  visibility: visible;
-  z-index: 7
-}
-
-._hover .score_share:hover,.score_share.hover {
-  transform: scale3d(.95,.95,1)
-}
-
-@-webkit-keyframes share {
-  from {
-      transform: scale3d(.3,.3,1);
-      opacity: 0
-  }
-
-  80% {
-      transform: scale3d(1.2,1.2,1);
-      opacity: 1
-  }
-
-  to {
-      transform: scale3d(1,1,1)
-  }
-}
-
-@keyframes share {
-  from {
-      transform: scale3d(.3,.3,1);
-      opacity: 0
-  }
-
-  80% {
-      transform: scale3d(1.2,1.2,1);
-      opacity: 1
-  }
-
-  to {
-      transform: scale3d(1,1,1)
-  }
 }
 
 .table_content {
