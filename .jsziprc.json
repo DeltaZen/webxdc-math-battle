@@ -1,18 +1,17 @@
 {
-  "compressionLevel": 0,
+  "compressionLevel": 9,
   "dereferenceLinks": true,
   "entries": [
     "app.js",
     "index.html",
     "manifest.toml",
     "icon.png",
-    "style.css",
-    "webxdc.js"
+    "style.css"
   ],
   "force": true,
   "ignoreEntries": ["*.map"],
   "mode": "add",
-  "outputEntry": "math-battle 1.0.3.xdc",
+  "outputEntry": "math-battle.xdc",
   "quiet": false,
   "verbose": false
 }
