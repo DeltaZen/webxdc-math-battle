@@ -6,6 +6,7 @@
     "index.html",
     "manifest.toml",
     "icon.png",
+    "Noteworthy-Bold.ttf",
     "style.css"
   ],
   "force": true,

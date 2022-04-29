@@ -2,8 +2,6 @@
 
 Math Battle game for Delta Chat
 
-Thinking clipart PNG Designed By CONG from [pngtree](https://pngtree.com/freepng/cartoon-brain-thinking-in-confusion-with-math-problems_5489694.html?sol=downref&id=bef)
-
 ## Building
 
 ```

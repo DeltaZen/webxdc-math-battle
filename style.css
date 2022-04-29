@@ -16,7 +16,7 @@
 
 @font-face {
   font-family: Noteworthy;
-  src: local(Noteworthy),url(../fonts/Noteworthy-Bold.ttf)
+  src: local(Noteworthy),url(Noteworthy-Bold.ttf)
 }
 
 body,html {
