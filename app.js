@@ -179,6 +179,7 @@ function paintQuestion() {
 function shakeTask() {
     clearTimeout(shakeTimeoutId);
     addClass(task, "tossing");
+    window.navigator.vibrate(200);
     shakeTimeoutId = setTimeout(() => removeClass(task, "tossing"), 350);
 }
 
