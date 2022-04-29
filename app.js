@@ -1,13 +1,13 @@
 let PLAYERS = {},
-    deadline,
     updateTimeoutId,
+    shakeTimeoutId,
+    timerAnimTimeoutId,
+    deadline,
+    question,
     firstTime = true,
     playing = false,
-    question,
-    scoreList = false,
     currentScore = 0,
-    lastScore = 0;
-var scoreValue = htmlElement("score-value"),
+    scoreValue = htmlElement("score-value"),
     scoreValueResult = htmlElement("result_score_value"),
     task = htmlElement("task"),
     itemX = htmlElement("task_x"),
@@ -20,9 +20,7 @@ var scoreValue = htmlElement("score-value"),
     pageWrap = htmlElement("page-wrap"),
     gameTitle = htmlElement("game-title"),
     correctBtn = htmlElement("correct-btn"),
-    wrongBtn = htmlElement("wrong-btn"),
-    shakeTimeoutId,
-    timerAnimTimeoutId;
+    wrongBtn = htmlElement("wrong-btn");
 
 let clickEffect = {
     obj: null,
@@ -241,123 +239,64 @@ function updateState(failed) {
     // game over
     clearTimeout(updateTimeoutId);  // stop the update loop
     playing = false;
+    let score = currentScore;
     if (failed !== undefined) {
         updateTimer(failed);
-        setTimeout(updateScoreboard, 300);
+        setTimeout(() => onGameOver(score), 300);
     } else {
-        updateScoreboard();
+        onGameOver(score);
     }
 }
 
-
-
-function setCurrentScore() {
-    if (scoreList && scoreList.length)
-        for (var a = 0; a < scoreList.length; a++) {
-            var b = scoreList[a];
-            if (b.current) {
-                lastScore = b.score;
-                break;
-            }
-        }
+function getScoreboard() {
+    return Object.keys(PLAYERS).map((addr) => {
+        return {...PLAYERS[addr], current: addr === window.webxdc.selfAddr};
+    }).sort((a, b) => b.score - a.score);
 }
+
+function getHighscore(addr) {
+    return PLAYERS[addr] ? PLAYERS[addr].score : 0;
+}
+
 function paintScoreboard() {
-    if (scoreList !== false && !playing) {
-        for (var a = "", b = 0; b < scoreList.length; b++) {
-            var entry = scoreList[b];
-            a +=
+    let scores = getScoreboard();
+    if (scores.length) {
+        let html = "";
+        for (let i = 0; i < scores.length; i++) {
+            let player = scores[i];
+            html +=
                 '<li class="row' +
-                (entry.current ? " you" : "") +
+                (player.current ? " you" : "") +
                 '"><span class="place">' +
-                `${b + 1}` +
+                `${i + 1}` +
                 '.</span><span class="score">' +
-                entry.score +
+                player.score +
                 '</span><div class="name">' +
-                entry.name +
+                player.name +
                 "</div></li>";
         }
-        table.innerHTML = a;
-        0 < scoreList.length
-            ? addClass(tableWrap, "opened")
-            : removeClass(tableWrap, "opened");
+        table.innerHTML = html;
+        addClass(tableWrap, "opened");
     }
 }
-function setScore() {
-    var array = [];
-    Object.keys(PLAYERS).forEach((key) =>
-                                 array.push({
-                                     ...PLAYERS[key],
-                                     current: false,
-                                 })
-                                );
 
-    scoreList = array.sort((a, b) => b.score - a.score);
-
-    setCurrentScore();
-    paintScoreboard();
-}
-function getHighScores() {
-    var array = [];
-    Object.keys(PLAYERS).forEach(
-        (key) =>
-            array.push({
-                ...PLAYERS[key],
-                current: true,
-            })
-    );
-    array.sort((a, b) => b.score - a.score);
-    setScore();
-    paintScoreboard();
-}
-function updateScoreboard() {
-    var pts = currentScore;
-
-    if (window.webxdc.selfName && pts) {
-        scoreList || (scoreList = []);
-        var f = false;
-        for (cont = 0; cont < scoreList.length; cont++) {
-            if (((objeto = scoreList[cont]), f)) {
-                console.log("objeto =", objeto);
-            } else
-                pts > objeto.score &&
-                ((scoreList[cont] = {
-                    score: pts,
-                    name: window.webxdc.selfName,
-                    current: true,
-                }),
-                 (f = objeto));
-        }
-    }
-    const info = window.webxdc.selfName + " scored " + pts + " in Math Battle";
-    if (PLAYERS[window.webxdc.selfAddr] && PLAYERS[window.webxdc.selfAddr].score < pts) {
+function onGameOver(score) {
+    const addr = window.webxdc.selfAddr;
+    if (getHighscore(addr) < score) {
+        const name = window.webxdc.selfName;
+        const info = name + " scored " + score + " in Math Battle";
         window.webxdc.sendUpdate(
             {
                 payload: {
-                    addr: window.webxdc.selfAddr,
-                    name: window.webxdc.selfName,
-                    score: pts,
+                    addr: addr,
+                    name: name,
+                    score: score,
                 },
                 info: info,
             },
             info
         );
-    } else if (PLAYERS[window.webxdc.selfAddr] === undefined) {
-        if (pts && pts > 0) {
-            window.webxdc.sendUpdate(
-                {
-                    payload: {
-                        addr: window.webxdc.selfAddr,
-                        name: window.webxdc.selfName,
-                        score: pts,
-                    },
-                    info: info,
-                },
-                info
-            );
-        }
     }
-    paintScoreboard();
-    currentScore > lastScore ? setScore() : getHighScores();
     sceneSelector();
 }
 
@@ -397,10 +336,8 @@ onload = () => {
         }
     });
 
-    paintScore();
-    paintQuestion();
     sceneSelector();
-    getHighScores();
+    paintScoreboard();
 
     window.webxdc.setUpdateListener((update) => {
         const player = update.payload;
@@ -409,10 +346,7 @@ onload = () => {
             PLAYERS[player.addr] = { name: player.name, score: player.score };
         }
         if (update.serial === update.max_serial && !playing) {
-            paintScore();
-            paintQuestion();
-            sceneSelector();
-            getHighScores();
+            paintScoreboard();
         }
     }, 0);
 };
