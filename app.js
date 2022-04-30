@@ -342,8 +342,7 @@ onload = () => {
 
     window.webxdc.setUpdateListener((update) => {
         const player = update.payload;
-        const prevScore = PLAYERS[player.addr]? PLAYERS[player.addr].score : 0;
-        if (prevScore < player.score) {
+        if (player.score > getHighscore(player.addr)) {
             PLAYERS[player.addr] = { name: player.name, score: player.score };
         }
         if (update.serial === update.max_serial && !playing) {
