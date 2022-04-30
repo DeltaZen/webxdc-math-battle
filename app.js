@@ -105,7 +105,7 @@ function randInt(min, max) {
 function setMath() {
     var op = ["+", "\u2013", "\u00d7", "/"][randInt(1, 4000) % 4]; // + - * /
     var isCorrect = 500 >= randInt(1, 1000);
-    hard = currentScore > 30;
+    let hard = currentScore > 30;
     switch (op) {
     case "+": // +
     case "\u2013": // -
@@ -201,7 +201,7 @@ function updateTimer(failed) {
 
 function checkAnswer(answer) {
     if (playing) {
-        if (answer === question.correct) {
+        if (question && answer === question.correct) {
             deadline += 1500;
             if (deadline - +new Date() > 10000) deadline = +new Date() + 10000;
             currentScore++;

@@ -2,12 +2,10 @@
   "compressionLevel": 9,
   "dereferenceLinks": true,
   "entries": [
-    "app.js",
-    "index.html",
+    "dist/assets",
+    "dist/index.html",
     "manifest.toml",
-    "icon.png",
-    "Noteworthy-Bold.ttf",
-    "style.css"
+    "icon.png"
   ],
   "force": true,
   "ignoreEntries": ["*.map"],
