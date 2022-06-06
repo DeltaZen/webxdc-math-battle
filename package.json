@@ -1,28 +1,13 @@
 {
-  "name": "webxdc-math-battle",
-  "version": "1.0.3",
-  "description": "Math Battle game for Delta Chat",
-  "main": "app.js",
-  "type": "module",
+  "private": true,
+  "packageManager": "pnpm@6.32.3",
   "scripts": {
     "dev": "vite --host --open",
-    "build": "vite build && pnpx jszip-cli -c .jsziprc.json",
+    "build": "vite build && jszip-cli -c jszip.config.json",
     "preview": "vite preview"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/M4ss1ck/webxdc-math-battle.git"
-  },
-  "author": "",
-  "license": "0BSD",
-  "bugs": {
-    "url": "https://github.com/M4ss1ck/webxdc-math-battle/issues"
-  },
-  "homepage": "https://github.com/M4ss1ck/webxdc-math-battle#readme",
   "devDependencies": {
-    "@ffflorian/jszip-cli": "^3.1.6"
-  },
-  "dependencies": {
-    "vite": "^2.9.5"
+    "@ffflorian/jszip-cli": "^3.1.6",
+    "vite": "^2.9.9"
   }
 }
