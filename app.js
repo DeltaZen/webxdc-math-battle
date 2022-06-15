@@ -1,5 +1,4 @@
-let PLAYERS = {},
-    updateTimeoutId,
+let updateTimeoutId,
     shakeTimeoutId,
     timerAnimTimeoutId,
     deadline,
@@ -15,8 +14,6 @@ let PLAYERS = {},
     itemY = htmlElement("task_y"),
     result = htmlElement("task_res"),
     timelineProgress = htmlElement("timeline_progress"),
-    table = htmlElement("table"),
-    tableWrap = htmlElement("table-wrap"),
     pageWrap = htmlElement("page-wrap"),
     gameTitle = htmlElement("game-title"),
     correctBtn = htmlElement("correct-btn"),
@@ -249,55 +246,8 @@ function updateState(failed) {
     }
 }
 
-function getScoreboard() {
-    return Object.keys(PLAYERS).map((addr) => {
-        return {...PLAYERS[addr], current: addr === window.webxdc.selfAddr};
-    }).sort((a, b) => b.score - a.score);
-}
-
-function getHighscore(addr) {
-    return PLAYERS[addr] ? PLAYERS[addr].score : 0;
-}
-
-function paintScoreboard() {
-    let scores = getScoreboard();
-    if (scores.length) {
-        let html = "";
-        for (let i = 0; i < scores.length; i++) {
-            let player = scores[i];
-            html +=
-                '<li class="row' +
-                (player.current ? " you" : "") +
-                '"><span class="place">' +
-                `${i + 1}` +
-                '.</span><span class="score">' +
-                player.score +
-                '</span><div class="name">' +
-                player.name +
-                "</div></li>";
-        }
-        table.innerHTML = html;
-        addClass(tableWrap, "opened");
-    }
-}
-
 function onGameOver(score) {
-    const addr = window.webxdc.selfAddr;
-    if (getHighscore(addr) < score) {
-        const name = window.webxdc.selfName;
-        const info = name + " scored " + score + " in Math Battle";
-        window.webxdc.sendUpdate(
-            {
-                payload: {
-                    addr: addr,
-                    name: name,
-                    score: score,
-                },
-                info: info,
-            },
-            info
-        );
-    }
+    window.highscores.setScore(score);
     sceneSelector();
 }
 
@@ -338,15 +288,6 @@ onload = () => {
     });
 
     sceneSelector();
-    paintScoreboard();
 
-    window.webxdc.setUpdateListener((update) => {
-        const player = update.payload;
-        if (player.score > getHighscore(player.addr)) {
-            PLAYERS[player.addr] = { name: player.name, score: player.score };
-        }
-        if (update.serial === update.max_serial && !playing) {
-            paintScoreboard();
-        }
-    }, 0);
+    window.highscores.init("Math Battle", "table");
 };

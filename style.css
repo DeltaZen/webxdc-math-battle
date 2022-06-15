@@ -10,7 +10,7 @@
   -webkit-tap-highlight-color: transparent
 }
 
-.gameTitle,.table .name {
+.gameTitle,.table .row-name {
   text-transform: uppercase
 }
 
@@ -290,30 +290,30 @@ body {
   list-style: none
 }
 
-.table .row {
+.table .score-row {
   margin: 0;
   padding: 2px 15px 4px;
   font-size: 17px
 }
 
-.table .row.you {
+.table .score-row.you {
   background: rgba(255,255,255,.4);
   border-radius: 6px
 }
 
-.table .place {
+.table .row-pos {
   float: left;
   min-width: 20px;
   padding-right: 7px
 }
 
-.table .name {
+.table .row-name {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden
 }
 
-.table .score {
+.table .row-score {
   float: right;
   text-align: right;
   min-width: 30px;
